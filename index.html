@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beraisee</title>
+
+    <!-- ROBOFLOW -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.15.0/dist/tf.js"></script>
+    <script src="https://cdn.roboflow.com/0.2.26/roboflow.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+    <img src="" id="img-view" width="1000px" height="1000px" class="img-change">
+    <div class="modal-container">
+        <div class="image-modal">
+            <img src="" alt="" class="img-change">
+            <div id="image-box"></div>
+        </div>
+    </div>
+    <div class="modal-container-2">
+        <div class="modal-info">
+            <div class="info-header">
+                <div class="info-title">
+                    <p>Informasi Tambahan</p>
+                    <p class="text-xs tag-xs class-default">Opsional</p>
+                </div>
+                <i class="ph-bold ph-x" id="close-info"></i>
+            </div>
+            <div class="info-main">
+                <section class="segment-input">
+                    <p>Segmentasi Pasar</p>
+                    <div class="segment-input-list">
+                        <label>
+                            <input type="radio" name="segment-input" value="Pasar Tradisional" checked>
+                            <div class="circle-radio"></div>
+                            <span>Pasar Tradisional</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="segment-input" value="Pasar Modern">
+                            <div class="circle-radio"></div>
+                            <span>Pasar Modern</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="segment-input" value="Pedagang Besar">
+                            <div class="circle-radio"></div>
+                            <span>Pedagang Besar</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="segment-input" value="Produsen">
+                            <div class="circle-radio"></div>
+                            <span>Produsen</span>
+                        </label>
+                    </div>
+                </section>
+                <div class="input-grid-3">
+                    <section class="province-input">
+                        <p>Lokasi</p>
+                        <div class="province-input-list">
+                            <input type="text" id="province-input" placeholder="Masukkan provinsi">
+                            <ul class="province-options"></ul>
+                        </div>
+                    </section>
+                    <section class="water-input">
+                        <p>Kadar Air</p>
+                        <div class="water-input-list">
+                            <input type="number" placeholder="e.g. 14">
+                            <span>%</span>
+                        </div>
+                    </section>
+                    <section class="substance-input">
+                        <p>Zat Kontaminan</p>
+                        <div class="substance-input-list">
+                            <label>
+                                <input type="radio" name="substance-input" value="-" checked>
+                                <div class="circle-radio"></div>
+                                <span>Tidak</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="substance-input" value="Ya">
+                                <div class="circle-radio"></div>
+                                <span>Ya</span>
+                            </label>
+                        </div>
+                    </section>
+                </div>
+                <section class="smell-input">
+                    <p>Bau Beras</p>
+                    <div class="smell-input-list">
+                        <label>
+                            <input type="radio" name="smell-input" value="-" checked>
+                            <div class="circle-radio"></div>
+                            <span>Tidak ada</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="smell-input" value="Apek">
+                            <div class="circle-radio"></div>
+                            <span>Apek</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="smell-input" value="Asam">
+                            <div class="circle-radio"></div>
+                            <span>Asam</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="smell-input" value="Lainnya">
+                            <div class="circle-radio"></div>
+                            <span>Lainnya</span>
+                        </label>
+                    </div>
+                </section>
+                <section class="degree-input">
+                    <p>Rata-rata Derajat Sosoh</p>
+                    <div class="degree-input-list">
+                        <div class="degree-input-value">
+                            <span id="degree-range">100</span>
+                        </div>
+                        <div class="degree-input-range">
+                            <p>0%</p>
+                            <input type="range" min="0" max="100" value="100" step="1" id="degree-input">
+                            <p>100%</p>
+                        </div>
+                    </div>
+                </section>
+                <div class="info-button">
+                    <button class="button-tertiary button-base" id="close-info-2">
+                        Tutup
+                    </button>
+                    <button class="button-primary button-base" id="save-info">
+                        Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <header>
+        <nav class="nav">
+            <div class="navbar">
+                <div class="navbar-left">
+                    <a href="#" class="navbar-logo">
+                        <img src="images/logo.png" alt="logo" width="24px">
+                        <h5>Beraisee</h5>
+                    </a>
+                    <div class="search-box">
+                        <div class="search-type">
+                            <i class="ph-bold ph-magnifying-glass"></i>
+                            <input type="text" class="search-input" placeholder="Cari sesuatu...">
+                        </div>
+                        <p class="text-xs">Ctrl /</p>
+                    </div>
+                </div>
+                <div class="navbar-right">
+                    <div class="navbar-icon">
+                        <i class="ph-bold ph-bell"></i>
+                        <i class="ph-bold ph-headphones"></i>
+                        <i class="ph-bold ph-info"></i>
+                    </div>
+                    <hr>
+                    <div class="navbar-profile">
+                        <img src="images/user.png" class="profile-img" alt="profile" width="34px">
+                        <div class="profile-user">
+                            <p>Teknokratain</p>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="sub-nav">
+            <div class="sub-navbar">
+                <ul class="navbar-list">
+                    <li class="navbar-item">
+                        <a href="#" class="navbar-link ">
+                            <i class="ph-bold ph-house"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="navbar-item navbar-item-active">
+                        <a href="#" class="navbar-link">
+                            <i class="ph-bold ph-database"></i>
+                            Data
+                        </a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="#" class="navbar-link">
+                            <i class="ph-bold ph-book-open"></i>
+                            Glosarium
+                        </a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="#" class="navbar-link">
+                            <i class="ph-bold ph-users-three"></i>
+                            Komunitas
+                        </a>
+                    </li>
+                </ul>
+                <div class="navbar-button">
+                    <label for="input-image" class="button-primary button-sm button-icon">
+                        <i class="ph-bold ph-upload-simple"></i>
+                        Gambar
+                    </label>
+                    <input type="file" accept="image/jpg, image/jpeg, image/png" id="input-image">
+                    <button class="button-tertiary button-sm button-icon" id="more-button">
+                        <i class="ph-fill ph-dots-three-outline-vertical"></i>
+                    </button>
+                    <div class="more-button more-hidden" id="button-more">
+                        <button class="button-icon">
+                            <i class="ph-bold ph-download-simple"></i>
+                            Unduh
+                        </button>
+                        <button class="button-icon">
+                            <i class="ph-bold ph-share-fat"></i>
+                            Bagikan
+                        </button>
+                        <button class="button-icon" id="add-info">
+                            <i class="ph-bold ph-plus-circle"></i>
+                            Informasi
+                        </button>
+                        <div></div>
+                        <button class="button-icon">
+                            <i class="ph-bold ph-flag"></i>
+                            Laporkan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main id="none-detect">
+        <img src="images/detect.png" alt="" style="clip-path: polygon();">
+    </main>
+    <main id="load-detect">
+        <div class="loading"></div>
+    </main>
+    <main id="complete-detect">
+        <!-- TITLE -->
+        <div class="main-header">
+            <div>
+                <div class="main-title">
+                    <h4 id="file-name">Nama file</h4>
+                    <p class="text-sm tag-sm" id="class-category"></p>
+                </div>
+                <p>Waktu deteksi: <span id="response-time">0</span> detik</p>
+            </div>
+            <div class="date-info">
+                <i class="ph-bold ph-calendar-blank"></i>
+                <p class="text-sm" id="date-now"></p>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="content-left">
+                <section class="overview">
+                    <p class="overview-title">Ikhtisar Identifikasi</p>
+                    <div class="overview-container">
+                        <h6><span>0</span> Objek</h6>
+                        <div class="overview-progress">
+                            <div class="overview-bar" id="over-bar"></div>
+                            <div class="overview-percent">
+                                <p class="text-xs">0%</p>
+                                <p class="text-xs">50%</p>
+                                <p class="text-xs">100%</p>
+                            </div>
+                        </div>
+                        <div class="overview-detail" id="over-data"></div>
+                    </div>
+                </section>
+                <div class="image-over">
+                    <img src="" class="img-change image-overview" alt="">
+                    <div id="image-box-view"></div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-head">
+                    <section class="content-head-item">
+                        <div class="content-head-title">
+                            <p class="text-xs">OBJEK</p>
+                            <i class="ph-bold ph-crosshair"></i>
+                        </div>
+                        <div class="content-head-subtitle">
+                            <h4 class="content-head-num object-num">0</h4>
+                            <p class="text-xs">Teridentifikasi</p>
+                        </div>
+                    </section>
+                    <section class="content-head-item">
+                        <div class="content-head-title">
+                            <p class="text-xs">BUTIR BERAS</p>
+                            <i class="ph-bold ph-grains"></i>
+                        </div>
+                        <div class="content-head-subtitle">
+                            <h4 class="content-head-num grains-num">0</h4>
+                            <p class="text-xs">/ <span>0</span> Objek</p>
+                        </div>
+                    </section>
+                    <section class="content-head-item">
+                        <div class="content-head-title">
+                            <p class="text-xs">HARGA PASARAN</p>
+                            <i class="ph-bold ph-coins"></i>
+                        </div>
+                        <div class="content-head-subtitle">
+                            <h4 class="content-head-num price-num">0</h4>
+                            <p class="text-xs">/ Kg</p>
+                        </div>
+                    </section>
+                </div>
+                <div class="content-grid">
+                    <section class="grains">
+                        <div class="grains-title">
+                            <p>Jenis Butir</p>
+                            <p class="text-xs tag-xs class-default" id="grains-count"></p>
+                        </div>
+                        <div class="grains-container">
+                            <div id="chart-grains"></div>
+                        </div>
+                    </section>
+                    <div class="content-right">
+                        <section class="water">
+                            <p>Kadar Air</p>
+                            <div class="water-detail">
+                                <i class="ph-bold ph-drop-half-bottom"></i>
+                                <h4 id="air-content">-</h4>
+                            </div>
+                        </section>
+                        <section class="substance">
+                            <p>Zat Kontaminan</p>
+                            <div class="substance-detail">
+                                <i class="ph-bold ph-flask"></i>
+                                <h4 id="contaminants">-</h4>
+                            </div>
+                        </section>
+                        <section class="smell">
+                            <p>Bau Beras</p>
+                            <div class="smell-detail">
+                                <i class="ph-bold ph-wind"></i>
+                                <h4 id="smell-rice">-</h4>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <section class="degree">
+                    <div class="degree-title">
+                        <p>Derajat Sosoh</p>
+                        <p class="text-xs tag-xs class-default" id="degree-figure"></p>
+                    </div>
+                    <div class="degree-container">
+                        <div id="chart-degree"></div>
+                    </div>
+                </section>
+                <section class="issues" id="issuesSection">
+                    <div class="issues-title">
+                        <div>
+                            <p id="issuesTitle">Penanganan Kualitas</p>
+                            <p class="text-xs tag-xs" id="class-issue"></p>
+                        </div>
+                        <p class="text-sm">Pelajari <a target="_blank"
+                                href="https://drive.google.com/file/d/1xpemZrngG8TwCzOye135sDLOtCaoKKba/view?usp=sharing">
+                                lebih lanjut</a> untuk mengevaluasi kualitas beras Anda</p>
+                    </div>
+                    <div class="issues-container">
+                        <!-- <div class="issue-data issue-warning" id="issueData">
+                            <div class="issue-data-head">
+                                <div>
+                                    <i class="ph-fill ph-warning"></i>
+                                    <p>Judul</p>
+                                </div>
+                                <i class="ph-fill ph-caret-right"></i>
+                            </div>
+                            <div class="issue-data-content">
+                                <div></div>
+                                <p class="text-sm">Konten</p>
+                            </div>
+                        </div>
+                        <div class="issue-data issue-error">
+                            <div class="issue-data-head">
+                                <div>
+                                    <i class="ph-fill ph-warning-circle"></i>
+                                    <p>Judul</p>
+                                </div>
+                                <i class="ph-fill ph-caret-right"></i>
+                            </div>
+                            <div class="issue-data-content">
+                                <div></div>
+                                <p class="text-sm">Konten</p>
+                            </div>
+                        </div> -->
+                    </div>
+                </section>
+            </div>
+        </div>
+        <section class="main-table">
+            <div class="table-header">
+                <p>Identifikasi Objek</p>
+                <div>
+                    <button class="button-tertiary button-sm button-icon">
+                        <i class="ph-bold ph-funnel-simple"></i>
+                        Filter
+                    </button>
+                    <button class="button-tertiary button-sm button-icon">
+                        <i class="ph-bold ph-export"></i>
+                        Ekspor
+                    </button>
+                </div>
+            </div>
+            <div class="table-content" id="table-json">
+                <!-- <table>
+                    <thead>
+                        <tr class="text-xs">
+                            <th data-sort onclick="sortTable(0, this)">OBJEK</th>
+                            <th data-sort onclick="sortTable(1, this)">SUMBU X</th>
+                            <th data-sort onclick="sortTable(2, this)">SUMBU Y</th>
+                            <th data-sort onclick="sortTable(3, this)">LEBAR</th>
+                            <th data-sort onclick="sortTable(4, this)">TINGGI</th>
+                            <th data-sort onclick="sortTable(5, this)">AKURASI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala1.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala2.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala3.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala4.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala5.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala6.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala7.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala8.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala9.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td class="table-data-primary"><img src="images/Ipsala10.jpg">Beras</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>100%</td>
+                        </tr>
+                    </tbody>
+                </table> -->
+            </div>
+            <div class="table-pagination">
+                <div class="table-view text-sm">
+                    <p>Menampilkan</p>
+                    <select id="view-item-page">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="50" selected>50</option>
+                    </select>
+                    <p>dari <span class="item-length">100</span></p>
+                </div>
+                <div class="table-page">
+                    <ul class=table-page-num>
+                        <li class="list table-page-active"><a href="#">1</a></li>
+                        <li class="list"><a href="#">2</a></li>
+                        <li class="list"><a href="#">3</a></li>
+                        <li class="list"><a href="#">4</a></li>
+                    </ul>
+                </div>
+                <div class="table-prev-next">
+                    <ul>
+                        <li class="prev"><a href="#" class="button-tertiary button-sm button-icon" id="prev"><i
+                                    class="ph-bold ph-arrow-left"></i></a></li>
+                        <li class="next"><a href="#" class="button-tertiary button-sm button-icon"
+                                id="next">Berikutnya<i class="ph-bold ph-arrow-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&#169; 2023 Loremipsum, All rights reserved.</p>
+        <nav>
+            <a href="#">Kebijakan Pribadi</a>
+            <a href="#">Ketentuan</a>
+            <a href="#">Lisensi</a>
+        </nav>
+    </footer>
+
+    <!-- PHOSPHOR ICONS -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
+
+    <!-- APEX CHART -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- GRID.JS -->
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+
+    <!-- JAVASCRIPT -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/harga.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>
