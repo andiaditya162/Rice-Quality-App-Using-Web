@@ -1,5 +1,4 @@
 # Teknokrata Indonesia 👋
-## Beraisee (Rice Quality)
 
 ### Tech & Tools
 <img src="https://img.shields.io/badge/-HTML5-E34F26?style=flat&logo=html5&logoColor=white">
