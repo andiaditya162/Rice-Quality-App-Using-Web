@@ -1,5 +1,5 @@
-### Teknokrata Indonesia 👋
-Beraisee (Rice Quality)
+# Teknokrata Indonesia 👋
+## Beraisee (Rice Quality)
 
 ---
 
