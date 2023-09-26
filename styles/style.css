@@ -1,25 +1,25 @@
 /* IMPORT FONT */
 @font-face {
     font-family: 'SF Pro Text';
-    src: url(fonts/sf-pro-text-bold.ttf) format('truetype');
+    src: url(../fonts/sf-pro-text-bold.ttf) format('truetype');
     font-weight: bold;
 }
 
 @font-face {
     font-family: 'SF Pro Text';
-    src: url(fonts/sf-pro-text-semibold.ttf) format('truetype');
+    src: url(../fonts/sf-pro-text-semibold.ttf) format('truetype');
     font-weight: 600;
 }
 
 @font-face {
     font-family: 'SF Pro Text';
-    src: url(fonts/sf-pro-text-regular.ttf) format('truetype');
+    src: url(../fonts/sf-pro-text-regular.ttf) format('truetype');
     font-weight: normal;
 }
 
 @font-face {
     font-family: 'SF Pro Display';
-    src: url(fonts/sf-pro-display-bold.ttf) format('truetype');
+    src: url(../fonts/sf-pro-display-bold.ttf) format('truetype');
     font-weight: bold;
 }
 
@@ -1914,4 +1914,49 @@ section.province-input {
     font-weight: var(--font-semi-bold);
     color: var(--primary-color-500);
     cursor: pointer;
+}
+
+/* HARGA (TOOLTIP) */
+.content-head-subtitle {
+    position: relative;
+}
+
+.price-tooltip {
+    background-color: var(--base-color-700);
+    padding: 14px;
+    border-radius: 10px;
+    position: absolute;
+    width: 210px;
+    top: 56px;
+    right: -11px;
+    color: var(--base-color-0);
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease;
+}
+
+.price-tooltip a {
+    color: var(--primary-color-500);
+    font-weight: var(--font-semi-bold);
+}
+
+.price-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 54px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent var(--base-color-700) transparent;
+}
+
+.content-head .content-head-item:last-child .content-head-subtitle {
+    cursor: default;
+}
+
+.content-head .content-head-item:last-child .content-head-subtitle:hover .price-tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    top: 46px;
 }

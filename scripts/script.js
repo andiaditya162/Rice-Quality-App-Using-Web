@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                const state = data.address.state;
+                const state = data.address.state || data.address.city;
                 const translatedState = translationDictionary[state] || state; // Jika terjemahan tidak ditemukan, gunakan teks asli
                 stateProvince = translatedState;
             })
@@ -233,6 +233,10 @@ function detectObjects(imageDataUrl) {
                             input.checked = true;
                         }
                     });
+
+                    // Tooltip harga
+                    document.getElementById("segment-tooltip").textContent = data.segment;
+                    document.getElementById("province-tooltip").textContent = data.province;
                 }
             }
 
@@ -356,6 +360,9 @@ function detectObjects(imageDataUrl) {
 
             var classCategory = document.querySelector("#class-category");
             classCategory.textContent = kategoriAkhir;
+
+            // Toottip kualitas di harga
+            document.getElementById("quality-tooltip").textContent = kategoriAkhir;
 
             // Objek untuk menyimpan informasi penanganan kualitas beras
             var issues = {

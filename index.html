@@ -306,13 +306,20 @@
                         <div class="content-head-subtitle">
                             <h4 class="content-head-num price-num">0</h4>
                             <p class="text-xs">/ Kg</p>
+                            <div class="price-tooltip">Harga ini berdasarkan data
+                                <a target="_blank" href="https://www.bi.go.id/hargapangan">Pusat Informasi Harga Pangan
+                                    Strategis (PIHPS) Nasional</a> untuk <span id="segment-tooltip">pasar
+                                    tradisional</span> di
+                                <span id="province-tooltip">semua provinsi</span> dengan kualitas
+                                <span id="quality-tooltip">bawah</span>
+                            </div>
                         </div>
                     </section>
                 </div>
                 <div class="content-grid">
                     <section class="grains">
                         <div class="grains-title">
-                            <p>Jenis Butir</p>
+                            <p>Parameter Utama</p>
                             <p class="text-xs tag-xs class-default" id="grains-count"></p>
                         </div>
                         <div class="grains-container">
@@ -362,34 +369,7 @@
                                 href="https://drive.google.com/file/d/1xpemZrngG8TwCzOye135sDLOtCaoKKba/view?usp=sharing">
                                 lebih lanjut</a> untuk mengevaluasi kualitas beras Anda</p>
                     </div>
-                    <div class="issues-container">
-                        <!-- <div class="issue-data issue-warning" id="issueData">
-                            <div class="issue-data-head">
-                                <div>
-                                    <i class="ph-fill ph-warning"></i>
-                                    <p>Judul</p>
-                                </div>
-                                <i class="ph-fill ph-caret-right"></i>
-                            </div>
-                            <div class="issue-data-content">
-                                <div></div>
-                                <p class="text-sm">Konten</p>
-                            </div>
-                        </div>
-                        <div class="issue-data issue-error">
-                            <div class="issue-data-head">
-                                <div>
-                                    <i class="ph-fill ph-warning-circle"></i>
-                                    <p>Judul</p>
-                                </div>
-                                <i class="ph-fill ph-caret-right"></i>
-                            </div>
-                            <div class="issue-data-content">
-                                <div></div>
-                                <p class="text-sm">Konten</p>
-                            </div>
-                        </div> -->
-                    </div>
+                    <div class="issues-container"></div>
                 </section>
             </div>
         </div>
@@ -408,100 +388,6 @@
                 </div>
             </div>
             <div class="table-content" id="table-json">
-                <!-- <table>
-                    <thead>
-                        <tr class="text-xs">
-                            <th data-sort onclick="sortTable(0, this)">OBJEK</th>
-                            <th data-sort onclick="sortTable(1, this)">SUMBU X</th>
-                            <th data-sort onclick="sortTable(2, this)">SUMBU Y</th>
-                            <th data-sort onclick="sortTable(3, this)">LEBAR</th>
-                            <th data-sort onclick="sortTable(4, this)">TINGGI</th>
-                            <th data-sort onclick="sortTable(5, this)">AKURASI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala1.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala2.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala3.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala4.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala5.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala6.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala7.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala8.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala9.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <td class="table-data-primary"><img src="images/Ipsala10.jpg">Beras</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>1000</td>
-                            <td>100%</td>
-                        </tr>
-                    </tbody>
-                </table> -->
             </div>
             <div class="table-pagination">
                 <div class="table-view text-sm">
